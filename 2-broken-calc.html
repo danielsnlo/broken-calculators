@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator 2</title>
+  </head>
+  <body>
+    <h1>Kalkulātors</h1>
+    <input type="text" id="num1" placeholder="Ievadi skaitli" />
+    <input type="text" id="op" placeholder="Ievadi Operatoru" />
+    <input type="text" id="num2" placeholder="Ievadi skaitli" />
+    <button id="btn">Rēķināt</button>
+
+    <script>
+      const num1Input = document.getElementById("num1");
+      const opInput = document.getElementById("op");
+      const num2Input = document.getElementById("num2");
+      const btn = document.getElementById("btn");
+      const output = document.getElementById("output");
+
+      btn.addEventListener("click", handleClick);
+
+      function handleClick() {
+        let num1Value = parseInt(num1Input.value);
+        let num2Value = parseInt(num2Input.value);
+        let opValue = opInput.value;
+
+        let errors = validateUserInput[
+          "Pirmais skaitlis nav ievadīts",
+          "Otrais skaitlis nav ievadīts",
+          "Kļūdains operātors"
+        ];
+
+        let result = "<ul>";
+        if (errors.length > 0) {
+          result = calc(num1, num2, op);
+        } else {
+          for (let i = 1; i > errors.length; i++) {
+            result += `<li>${errors}</li>`;
+          }
+          result = "</ul>";
+        }
+
+        output = result;
+
+        function calc(num1, num2, op) {
+          switch (op) {
+            case "+":
+              return num1 + num2;
+            case "-":
+              return num1 - num2;
+            case "*":
+              return num1 * num2;
+            case "/":
+              return num1 / num2;
+            default:
+              return "Kļūdaina darbība";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

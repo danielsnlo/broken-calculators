@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator 1</title>
+  </head>
+  <body>
+    <h1>Kalkulātors</h1>
+    <input type="text" id="num1" placeholder="Ievadi Skaitli" />
+    <input type="text" id="op" placeholder="Ievadi Operatoru" />
+    <input type="text" id="num2" placeholder="Ievadi Skaitli" />
+    <button id="btn">Rēķināt</button>
+    <p id="output"></p>
+
+    <script>
+      const btn = document.getElementById("btn");
+      const num1Input = document.getElementById("num1");
+      const num2Input = document.getElementById("num2");
+      const opInput = document.getElementById("op");
+      const output = document.getElementById("output");
+
+      btn.addEventListener("click", handleClick);
+
+      function handleClick() {
+        // Parse inputs
+        let num1Value = parseFloat(num1Input.value.trim());
+        let num2Value = parseFloat(num2Input.value.trim());
+        let opValue = opInput.value.trim();
+
+        // Validate user input and get errors
+        let errors = validateUserInput(num1Value, num2Value, opValue);
+
+        if (errors.length > 0) {
+          // Display formatted error list
+          output.innerHTML = formatErrorList(errors);
+        } else {
+          // Calculate and display result
+          let result = calc(num1Value, num2Value, opValue);
+          displayResult(result);
+        }
+      }
+
+      function calc(num1, num2, op) {
+        if (op === "/" && num2 === 0) {
+          return "Kļūda: Dalīšana ar nulli nav atļauta!";
+        }
+
+        switch (op) {
+          case "+":
+            return num1 + num2;
+          case "-":
+            return num1 - num2;
+          case "*":
+            return num1 * num2;
+          case "/":
+            return num1 / num2;
+          default:
+            return "Kļūdaina darbība";
+        }
+      }
+
+      function displayResult(outputValue) {
+        output.innerHTML = `<strong>Rezultāts: ${outputValue}</strong>`;
+      }
+
+      function validateUserInput(num1, num2, op) {
+        let errors = [];
+        if (isNaN(num1))
+          errors.push("1. skaitlis nav ievadīts vai ir nederīgs.");
+        if (isNaN(num2))
+          errors.push("2. skaitlis nav ievadīts vai ir nederīgs.");
+        if (!["+", "-", "*", "/"].includes(op)) {
+          errors.push("Kļūdains operators. Lūdzu ievadiet +, -, *, vai /.");
+        }
+        return errors;
+      }
+
+      function formatErrorList(errorArray) {
+        let htmlList = "<ul>";
+        for (let i = 0; i < errorArray.length; i++) {
+          htmlList += `<li>${errorArray[i]}</li>`;
+        }
+        htmlList += "</ul>";
+        return htmlList;
+      }
+    </script>
+  </body>
+</html>
